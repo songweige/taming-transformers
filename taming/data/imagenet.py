@@ -121,7 +121,8 @@ class ImageNetBase(Dataset):
 
 
 class ImageNetTrain(ImageNetBase):
-    NAME = "ILSVRC2012_train"
+    # NAME = "ILSVRC2012_train"
+    NAME = "train"
     URL = "http://www.image-net.org/challenges/LSVRC/2012/"
     AT_HASH = "a306397ccf9c2ead27155983c254227c0fd938e2"
     FILES = [
@@ -134,11 +135,16 @@ class ImageNetTrain(ImageNetBase):
     def _prepare(self):
         self.random_crop = retrieve(self.config, "ImageNetTrain/random_crop",
                                     default=True)
-        cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
-        self.root = os.path.join(cachedir, "autoencoders/data", self.NAME)
-        self.datadir = os.path.join(self.root, "data")
-        self.txt_filelist = os.path.join(self.root, "filelist.txt")
+        # cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
+        # self.root = os.path.join(cachedir, "autoencoders/data", self.NAME)
+        # self.datadir = os.path.join(self.root, "data")
+        # self.txt_filelist = os.path.join(self.root, "filelist.txt")
         self.expected_length = 1281167
+        basedir = '/datasets01/imagenet_full_size/061417/'
+        cachedir = '/checkpoint/songweig/cache/imagenet'
+        self.root = os.path.join(cachedir, self.NAME)
+        self.datadir = os.path.join(basedir, self.NAME)
+        self.txt_filelist = os.path.join(cachedir, self.NAME, "filelist.txt")
         if not bdu.is_prepared(self.root):
             # prep
             print("Preparing dataset {} in {}".format(self.NAME, self.root))
@@ -176,7 +182,7 @@ class ImageNetTrain(ImageNetBase):
 
 
 class ImageNetValidation(ImageNetBase):
-    NAME = "ILSVRC2012_validation"
+    NAME = "val"
     URL = "http://www.image-net.org/challenges/LSVRC/2012/"
     AT_HASH = "5d6d0df7ed81efd49ca99ea4737e0ae5e3a5f2e5"
     VS_URL = "https://heibox.uni-heidelberg.de/f/3e0f6e9c624e45f2bd73/?dl=1"
@@ -192,10 +198,15 @@ class ImageNetValidation(ImageNetBase):
     def _prepare(self):
         self.random_crop = retrieve(self.config, "ImageNetValidation/random_crop",
                                     default=False)
-        cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
-        self.root = os.path.join(cachedir, "autoencoders/data", self.NAME)
-        self.datadir = os.path.join(self.root, "data")
-        self.txt_filelist = os.path.join(self.root, "filelist.txt")
+        # cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
+        # self.root = os.path.join(cachedir, "autoencoders/data", self.NAME)
+        # self.datadir = os.path.join(self.root, "data")
+        # self.txt_filelist = os.path.join(self.root, "filelist.txt")
+        basedir = '/datasets01/imagenet_full_size/061417/'
+        cachedir = '/checkpoint/songweig/cache/imagenet'
+        self.root = os.path.join(cachedir, self.NAME)
+        self.datadir = os.path.join(basedir, self.NAME)
+        self.txt_filelist = os.path.join(cachedir, self.NAME, "filelist.txt")
         self.expected_length = 50000
         if not bdu.is_prepared(self.root):
             # prep
