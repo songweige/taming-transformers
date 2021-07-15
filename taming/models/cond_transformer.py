@@ -239,7 +239,7 @@ class Net2NetTransformer(pl.LightningModule):
         log["inputs"] = x
         log["reconstructions"] = x_rec
 
-        if self.cond_stage_key != "image":
+        if self.cond_stage_key not in ["image", "class_label"]:
             cond_rec = self.cond_stage_model.decode(quant_c)
             if self.cond_stage_key == "segmentation":
                 # get image from segmentation mask
